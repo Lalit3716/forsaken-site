@@ -10,18 +10,16 @@ import { Loading } from "../ui/Loading";
 import { Badge } from "../ui/Badge";
 
 function QueryResultViewer() {
-  const query = useQueryStore((state) => state.selectedQuery);
   const loading = useQueryStore((state) => state.loading);
+  const result = useQueryStore((state) => state.result);
+  const executionTime = useQueryStore((state) => state.executionTime);
 
   const renderContent = () => {
     if (loading) return <Loading />;
 
-    if (query?.result) {
+    if (result) {
       return (
-        <Table
-          data={query.result?.data ?? []}
-          columns={query.result?.columns ?? []}
-        />
+        <Table data={result?.data ?? []} columns={result?.columns ?? []} />
       );
     }
 
@@ -32,8 +30,8 @@ function QueryResultViewer() {
     <GridArea $gridArea="query-result-viewer">
       <ToolbarContainer>
         <Title>Query Result Viewer</Title>
-        {query?.executionTime !== undefined && (
-          <Badge>Execution Time: {query?.executionTime}ms</Badge>
+        {executionTime !== null && (
+          <Badge>Execution Time: {executionTime}ms</Badge>
         )}
         <IconButton text="Export" icon={<BiImport />} onClick={() => {}} />
       </ToolbarContainer>

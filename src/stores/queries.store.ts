@@ -15,12 +15,15 @@ type QueryStore = {
   loading: boolean;
   queries: Query[];
   selectedQuery: Query | null;
-  setSelectedQuery: (query: Query) => void;
+  result: DataSet | null;
+  executionTime: number | null;
+  setSelectedQuery: (query: Query | null) => void;
   addQuery: (query: Query) => void;
   updateQuery: (query: Query) => void;
   setLoading: (loading: boolean) => void;
   clearSelectedQuery: () => void;
-  runQuery: () => void;
+  runQuery: (query?: Query) => void;
+  saveQuery: (query: Query) => void;
 };
 
 const DEFAULT_QUERIES = [
@@ -54,34 +57,44 @@ export const useQueryStore = create<QueryStore>((set, get) => ({
   queries: DEFAULT_QUERIES,
   loading: false,
   selectedQuery: null,
-  setSelectedQuery: (query: Query) => set({ selectedQuery: query }),
+  result: null,
+  executionTime: null,
+  setSelectedQuery: (query: Query | null) => set({ selectedQuery: query }),
   addQuery: (query: Query) =>
     set((state) => ({ queries: [...state.queries, query] })),
   updateQuery: (query: Query) => {
     set((state) => ({
       queries: state.queries.map((q) => (q.id === query.id ? query : q)),
+      selectedQuery: query,
     }));
-    set({ selectedQuery: query });
   },
   setLoading: (loading: boolean) => set({ loading }),
-  runQuery: async () => {
+  runQuery: async (newQuery?: Query) => {
     const query = get().selectedQuery;
+
+    if (!query && newQuery) {
+      const { result, executionTime } = await executeQuery(newQuery);
+      set({ result, executionTime });
+      return;
+    }
 
     if (!query) return;
 
     if (query.result) {
       get().updateQuery({ ...query, executionTime: 0 });
+      set({ result: query.result, executionTime: query.executionTime });
       return;
     }
 
     set({ loading: true });
     const { result, executionTime } = await executeQuery(query);
     get().updateQuery({ ...query, result, executionTime });
-    set({ loading: false });
+    set({ loading: false, result, executionTime });
   },
   saveQuery: (query: Query) => {
     set((state) => ({
       queries: [...state.queries, query],
+      selectedQuery: query,
     }));
   },
   clearSelectedQuery: () => set({ selectedQuery: null }),

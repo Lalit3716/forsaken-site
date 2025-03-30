@@ -46,7 +46,7 @@ export const executeQuery = async (query: Query) => {
   }
 
   // Wait random amount of time from 100ms to 300ms
-  const executionTime = Math.random() * 200 + 100;
+  const executionTime = Math.floor(Math.random() * 200 + 100);
   await new Promise((resolve) => setTimeout(resolve, executionTime));
 
   return {

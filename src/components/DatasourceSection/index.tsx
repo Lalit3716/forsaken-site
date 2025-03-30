@@ -1,11 +1,12 @@
 import { FaFileImport } from "react-icons/fa6";
 
 import { IconButton } from "../ui/Button";
-import { GridArea } from "../ui/Container";
+import { Container, GridArea } from "../ui/Container";
 import ToolbarContainer from "../ui/Toolbar";
 import { Select } from "../ui/Select";
 import { useDatasourceStore } from "../../stores/datasource.store";
 import { Table } from "../ui/Table";
+import { Loading } from "../ui/Loading";
 
 function DatasourceSection() {
   const loading = useDatasourceStore((state) => state.loading);
@@ -22,8 +23,10 @@ function DatasourceSection() {
   };
 
   const renderContent = () => {
-    if (loading) return <p>Loading...</p>;
-    if (!selectedDatasource) return <p>Select a datasource to view data</p>;
+    if (loading) return <Loading />;
+    if (!selectedDatasource)
+      return <Container $centered>Select a datasource to view data</Container>;
+
     return (
       <Table
         columns={selectedDatasource.dataSet.columns}

@@ -18,6 +18,7 @@ type DatasourceStore = {
   datasources: Record<string, Datasource>;
   selectedDatasource: Datasource | null;
   setSelectedDatasource: (datasource: Datasource) => void;
+  setSelectedDatasourceById: (id: string) => Promise<void>;
   loadDatasource: (id: string) => Promise<Datasource>;
   addCustomDatasource: (file: File) => Promise<Datasource>;
 };
@@ -74,6 +75,10 @@ export const useDatasourceStore = create<DatasourceStore>((set, get) => ({
   availableDatasources: AVAILABLE_DATASOURCES,
   datasources: {},
   selectedDatasource: null,
+  setSelectedDatasourceById: async (id: string) => {
+    await get().loadDatasource(id);
+    set({ selectedDatasource: get().datasources[id] });
+  },
   setSelectedDatasource: (datasource: Datasource) =>
     set({ selectedDatasource: datasource }),
   loadDatasource: async (id: string) => {

@@ -19,6 +19,12 @@ type QueryStore = {
 
 const DEFAULT_QUERIES = [
   {
+    id: "-1",
+    name: "Select saved queries",
+    query: "",
+    datasourceId: "",
+  },
+  {
     id: "1",
     name: "Query 1",
     query: "SELECT * FROM customers",

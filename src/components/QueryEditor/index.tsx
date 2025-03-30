@@ -5,20 +5,32 @@ import { GridArea } from "../ui/Container";
 import ToolbarContainer from "../ui/Toolbar";
 import { IconButton } from "../ui/Button";
 import { Select } from "../ui/Select";
+import { useQueryStore } from "../../stores/queries.store";
+import { useDatasourceStore } from "../../stores/datasource.store";
 
 function QueryEditor() {
+  const queries = useQueryStore((state) => state.queries);
+  const selectedQuery = useQueryStore((state) => state.selectedQuery);
+  const setSelectedQuery = useQueryStore((state) => state.setSelectedQuery);
+  const setSelectedDatasourceById = useDatasourceStore(
+    (state) => state.setSelectedDatasourceById
+  );
+
+  const handleSelectQuery = (queryId: string) => {
+    const query = queries.find((q) => q.id === queryId);
+    if (query) {
+      setSelectedQuery(query);
+      setSelectedDatasourceById(query.datasourceId);
+    }
+  };
+
   return (
     <GridArea $gridArea="query-editor">
       <ToolbarContainer>
         <Select
-          value=""
-          options={[
-            { label: "Select saved queries", value: "" },
-            { label: "Query 1", value: "1" },
-            { label: "Query 2", value: "2" },
-            { label: "Query 3", value: "3" },
-          ]}
-          onChange={() => {}}
+          value={selectedQuery?.id ?? ""}
+          options={queries.map((q) => ({ label: q.name, value: q.id }))}
+          onChange={handleSelectQuery}
         />
         <IconButton text="Save Query" icon={<FaSave />} onClick={() => {}} />
         <IconButton text="Run" icon={<FaPlay />} onClick={() => {}} />
@@ -27,6 +39,7 @@ function QueryEditor() {
         height="100%"
         defaultLanguage="sql"
         theme="vs-light"
+        value={selectedQuery?.query ?? ""}
         options={{
           minimap: { enabled: false },
           scrollBeyondLastLine: false,

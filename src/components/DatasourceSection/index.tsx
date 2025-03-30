@@ -9,6 +9,7 @@ import { useDatasourceStore } from "../../stores/datasource.store";
 import { Table } from "../ui/Table";
 import { Loading } from "../ui/Loading";
 import { Title } from "../ui/Title";
+import { useQueryStore } from "../../stores/queries.store";
 
 function DatasourceSection() {
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -23,9 +24,13 @@ function DatasourceSection() {
   const addCustomDatasource = useDatasourceStore(
     (state) => state.addCustomDatasource
   );
+  const clearSelectedQuery = useQueryStore((state) => state.clearSelectedQuery);
 
   const handleSelectDatasource = async (datasource: string) => {
-    if (datasource) await loadDatasource(datasource);
+    if (datasource) {
+      await loadDatasource(datasource);
+      clearSelectedQuery();
+    }
   };
 
   const handleFileUpload = async (

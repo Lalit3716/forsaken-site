@@ -4,6 +4,7 @@ type IconButtonProps = {
   text?: string;
   icon: React.ReactNode;
   onClick: () => void;
+  disabled?: boolean;
 };
 
 export const StyledButton = styled.button<{ $color?: string }>`
@@ -25,16 +26,24 @@ export const StyledButton = styled.button<{ $color?: string }>`
   }
 `;
 
-export const StyledIconButton = styled(StyledButton)`
+export const StyledIconButton = styled(StyledButton)<{ $disabled?: boolean }>`
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 0.5rem;
+  opacity: ${({ $disabled }) => ($disabled ? 0.5 : 1)};
+  cursor: ${({ $disabled }) => ($disabled ? "not-allowed" : "pointer")};
+  pointer-events: ${({ $disabled }) => ($disabled ? "none" : "auto")};
 `;
 
-export const IconButton = ({ text, icon, onClick }: IconButtonProps) => {
+export const IconButton = ({
+  text,
+  icon,
+  onClick,
+  disabled,
+}: IconButtonProps) => {
   return (
-    <StyledIconButton onClick={onClick}>
+    <StyledIconButton onClick={onClick} $disabled={disabled}>
       {text}
       {icon}
     </StyledIconButton>

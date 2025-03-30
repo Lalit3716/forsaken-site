@@ -19,6 +19,7 @@ type QueryStore = {
   addQuery: (query: Query) => void;
   updateQuery: (query: Query) => void;
   setLoading: (loading: boolean) => void;
+  clearSelectedQuery: () => void;
   runQuery: () => void;
 };
 
@@ -83,4 +84,5 @@ export const useQueryStore = create<QueryStore>((set, get) => ({
       queries: [...state.queries, query],
     }));
   },
+  clearSelectedQuery: () => set({ selectedQuery: null }),
 }));

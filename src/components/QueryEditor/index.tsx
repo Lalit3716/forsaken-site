@@ -16,6 +16,9 @@ function QueryEditor() {
   const [open, setOpen] = useState(false);
   const queries = useQueryStore((state) => state.queries);
   const selectedQuery = useQueryStore((state) => state.selectedQuery);
+  const selectedDatasource = useDatasourceStore(
+    (state) => state.selectedDatasource
+  );
   const setSelectedQuery = useQueryStore((state) => state.setSelectedQuery);
   const setSelectedDatasourceById = useDatasourceStore(
     (state) => state.setSelectedDatasourceById
@@ -38,7 +41,7 @@ function QueryEditor() {
       <Modal
         isOpen={open}
         onClose={closeModal}
-        title="Save Query"
+        title={`Saving Query for ${selectedDatasource?.name}`}
         primaryAction={{ label: "Save", onClick: () => {} }}
         secondaryAction={{ label: "Cancel", onClick: closeModal }}
       >
@@ -56,6 +59,7 @@ function QueryEditor() {
           text="Save Query"
           icon={<FaSave />}
           onClick={() => setOpen(true)}
+          disabled={!selectedDatasource}
         />
         <IconButton text="Run" icon={<FaPlay />} onClick={runQuery} />
       </ToolbarContainer>

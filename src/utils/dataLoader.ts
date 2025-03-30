@@ -1,8 +1,4 @@
-export async function loadCSVData(
-  filePath: string
-): Promise<{ columns: string[]; data: Record<string, unknown>[] }> {
-  const response = await fetch(filePath);
-  const text = await response.text();
+export function parseCSV(text: string) {
   const lines = text.split("\n");
 
   if (lines.length < 2) {
@@ -23,6 +19,14 @@ export async function loadCSVData(
     });
 
   return { columns, data };
+}
+
+async function loadCSVData(
+  filePath: string
+): Promise<{ columns: string[]; data: Record<string, unknown>[] }> {
+  const response = await fetch(filePath);
+  const text = await response.text();
+  return parseCSV(text);
 }
 
 export async function loadDatasource(id: string) {

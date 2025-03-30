@@ -1,4 +1,5 @@
 import { FaFileImport } from "react-icons/fa6";
+import { useRef } from "react";
 
 import { IconButton } from "../ui/Button";
 import { Container, GridArea } from "../ui/Container";
@@ -9,6 +10,7 @@ import { Table } from "../ui/Table";
 import { Loading } from "../ui/Loading";
 
 function DatasourceSection() {
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const loading = useDatasourceStore((state) => state.loading);
   const availableDatasources = useDatasourceStore(
     (state) => state.availableDatasources
@@ -17,9 +19,29 @@ function DatasourceSection() {
   const selectedDatasource = useDatasourceStore(
     (state) => state.selectedDatasource
   );
+  const addCustomDatasource = useDatasourceStore(
+    (state) => state.addCustomDatasource
+  );
 
   const handleSelectDatasource = async (datasource: string) => {
     if (datasource) await loadDatasource(datasource);
+  };
+
+  const handleFileUpload = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      try {
+        await addCustomDatasource(file);
+      } catch (error) {
+        console.error("Failed to load custom datasource:", error);
+      }
+    }
+
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
   };
 
   const renderContent = () => {
@@ -39,13 +61,21 @@ function DatasourceSection() {
     <GridArea $gridArea="datasource-section">
       <ToolbarContainer>
         <Select
+          value={selectedDatasource?.id ?? ""}
           options={availableDatasources}
           onChange={handleSelectDatasource}
+        />
+        <input
+          type="file"
+          ref={fileInputRef}
+          accept=".csv"
+          onChange={handleFileUpload}
+          style={{ display: "none" }}
         />
         <IconButton
           text="Add Datasource"
           icon={<FaFileImport />}
-          onClick={() => {}}
+          onClick={() => fileInputRef.current?.click()}
         />
       </ToolbarContainer>
       {renderContent()}

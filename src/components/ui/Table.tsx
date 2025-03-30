@@ -61,7 +61,7 @@ export const Table = ({ columns, data }: TableProps) => {
         </TableHeader>
         <TableBody>
           {data.map((row, rowIndex) => (
-            <TableRow key={`rowIndex`}>
+            <TableRow key={rowIndex}>
               {columns.map((column) => (
                 <TableCell key={`${rowIndex}-${column}`}>
                   {String(row[column] ?? "")}

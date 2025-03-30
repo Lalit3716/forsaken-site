@@ -6,6 +6,7 @@ type SelectOption = {
 };
 
 type SelectProps = {
+  value: string;
   options: SelectOption[];
   defaultValue?: string;
   onChange: (value: string) => void;
@@ -38,10 +39,16 @@ export const SelectContainer = styled.div`
   gap: 0.25rem;
 `;
 
-export const Select = ({ options, defaultValue, onChange }: SelectProps) => {
+export const Select = ({
+  value,
+  options,
+  defaultValue,
+  onChange,
+}: SelectProps) => {
   return (
     <SelectContainer>
       <StyledSelect
+        value={value}
         defaultValue={defaultValue}
         onChange={(e) => onChange(e.target.value)}
       >

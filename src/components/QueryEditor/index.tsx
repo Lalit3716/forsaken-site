@@ -11,6 +11,7 @@ function QueryEditor() {
     <GridArea $gridArea="query-editor">
       <ToolbarContainer>
         <Select
+          value=""
           options={[
             { label: "Select saved queries", value: "" },
             { label: "Query 1", value: "1" },

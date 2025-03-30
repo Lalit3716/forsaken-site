@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { loadDatasource } from "../utils/dataLoader";
+import { loadDatasource, parseCSV } from "../utils/dataLoader";
 
 type DataSet = {
   columns: string[];
@@ -19,6 +19,7 @@ type DatasourceStore = {
   selectedDatasource: Datasource | null;
   setSelectedDatasource: (datasource: Datasource) => void;
   loadDatasource: (id: string) => Promise<Datasource>;
+  addCustomDatasource: (file: File) => Promise<Datasource>;
 };
 
 const AVAILABLE_DATASOURCES = [
@@ -66,10 +67,6 @@ const AVAILABLE_DATASOURCES = [
     label: "Suppliers",
     value: "suppliers",
   },
-  {
-    label: "Territories",
-    value: "territories",
-  },
 ];
 
 export const useDatasourceStore = create<DatasourceStore>((set, get) => ({
@@ -104,5 +101,42 @@ export const useDatasourceStore = create<DatasourceStore>((set, get) => ({
     set({ loading: false });
 
     return dataSource;
+  },
+  addCustomDatasource: async (file: File) => {
+    set({ loading: true });
+
+    try {
+      const text = await file.text();
+      const dataSet = parseCSV(text);
+
+      const id = `custom_${Date.now()}`;
+      const dataSource: Datasource = {
+        id,
+        name: file.name
+          .replace(".csv", "")
+          .replace(/_/g, " ")
+          .replace(/\b\w/g, (l) => l.toUpperCase()),
+        dataSet,
+      };
+
+      set((state) => ({
+        datasources: {
+          ...state.datasources,
+          [id]: dataSource,
+        },
+        selectedDatasource: dataSource,
+        availableDatasources: [
+          ...state.availableDatasources,
+          {
+            label: dataSource.name,
+            value: id,
+          },
+        ],
+      }));
+
+      return dataSource;
+    } finally {
+      set({ loading: false });
+    }
   },
 }));

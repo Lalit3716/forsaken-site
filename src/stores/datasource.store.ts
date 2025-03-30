@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { loadDatasource, parseCSV } from "../utils/dataLoader";
 
-type DataSet = {
+export type DataSet = {
   columns: string[];
   data: Record<string, unknown>[];
 };

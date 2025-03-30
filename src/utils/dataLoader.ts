@@ -30,7 +30,7 @@ async function loadCSVData(
 }
 
 export async function loadDatasource(id: string) {
-  const dataSet = await loadCSVData(`/src/data/${id}.csv`);
+  const dataSet = await loadCSVData(`/data/${id}.csv`);
   return {
     id,
     name: id.replace(/_/g, " ").replace(/\b\w/g, (l) => l.toUpperCase()),

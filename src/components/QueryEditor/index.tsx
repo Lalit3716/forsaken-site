@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Editor } from "@monaco-editor/react";
 import { FaPlay, FaSave } from "react-icons/fa";
 
@@ -8,8 +9,10 @@ import { Select } from "../ui/Select";
 import { useQueryStore } from "../../stores/queries.store";
 import { useDatasourceStore } from "../../stores/datasource.store";
 import { Title } from "../ui/Title";
+import { Modal } from "../ui/Modal";
 
 function QueryEditor() {
+  const [open, setOpen] = useState(false);
   const queries = useQueryStore((state) => state.queries);
   const selectedQuery = useQueryStore((state) => state.selectedQuery);
   const setSelectedQuery = useQueryStore((state) => state.setSelectedQuery);
@@ -25,8 +28,21 @@ function QueryEditor() {
     }
   };
 
+  const closeModal = () => {
+    setOpen(false);
+  };
+
   return (
     <GridArea $gridArea="query-editor">
+      <Modal
+        isOpen={open}
+        onClose={closeModal}
+        title="Save Query"
+        primaryAction={{ label: "Save", onClick: () => {} }}
+        secondaryAction={{ label: "Cancel", onClick: closeModal }}
+      >
+        <input />
+      </Modal>
       <ToolbarContainer>
         <Title>Query Editor</Title>
         <Select
@@ -34,7 +50,11 @@ function QueryEditor() {
           options={queries.map((q) => ({ label: q.name, value: q.id }))}
           onChange={handleSelectQuery}
         />
-        <IconButton text="Save Query" icon={<FaSave />} onClick={() => {}} />
+        <IconButton
+          text="Save Query"
+          icon={<FaSave />}
+          onClick={() => setOpen(true)}
+        />
         <IconButton text="Run" icon={<FaPlay />} onClick={runQuery} />
       </ToolbarContainer>
       <Editor

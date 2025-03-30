@@ -6,8 +6,8 @@ type IconButtonProps = {
   onClick: () => void;
 };
 
-export const StyledButton = styled.button`
-  background-color: var(--secondary-color);
+export const StyledButton = styled.button<{ $color?: string }>`
+  background-color: ${({ $color }) => $color ?? "var(--secondary-color)"};
   color: var(--text-color);
   border: 1px solid var(--border-color);
   padding: 0.5rem 1rem;

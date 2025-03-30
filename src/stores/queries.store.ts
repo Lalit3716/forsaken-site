@@ -78,4 +78,9 @@ export const useQueryStore = create<QueryStore>((set, get) => ({
     get().updateQuery({ ...query, result, executionTime });
     set({ loading: false });
   },
+  saveQuery: (query: Query) => {
+    set((state) => ({
+      queries: [...state.queries, query],
+    }));
+  },
 }));

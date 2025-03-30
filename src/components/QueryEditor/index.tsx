@@ -61,17 +61,25 @@ function QueryEditor() {
           onClick={() => setOpen(true)}
           disabled={!selectedDatasource}
         />
-        <IconButton text="Run" icon={<FaPlay />} onClick={runQuery} />
+        <IconButton
+          text="Run"
+          icon={<FaPlay />}
+          onClick={runQuery}
+          disabled={!selectedDatasource}
+        />
       </ToolbarContainer>
       <Editor
         height="100%"
         defaultLanguage="sql"
         theme="vs-light"
-        value={selectedQuery?.query ?? ""}
+        value={
+          selectedQuery?.query ??
+          (!selectedDatasource ? "-- Select a datasource to run queries." : "")
+        }
         options={{
           minimap: { enabled: false },
           scrollBeyondLastLine: false,
-          fontSize: 12,
+          fontSize: 16,
           wordWrap: "on",
         }}
       />

@@ -15,4 +15,6 @@ export const Container = styled.div<{ $centered?: boolean }>`
 
 export const GridArea = styled(Container)<{ $gridArea: string }>`
   grid-area: ${({ $gridArea }) => $gridArea};
+  overflow-y: scroll;
+  overflow-x: scroll;
 `;

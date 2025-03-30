@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const Button = styled.button`
+export const Button = styled.button`
   background-color: var(--secondary-color);
   color: var(--text-color);
   border: 1px solid var(--border-color);
@@ -19,4 +19,9 @@ const Button = styled.button`
   }
 `;
 
-export default Button;
+export const IconButton = styled(Button)`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+`;

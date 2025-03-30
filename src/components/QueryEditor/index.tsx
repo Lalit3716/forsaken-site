@@ -1,8 +1,9 @@
 import { Editor } from "@monaco-editor/react";
+import { FaPlay } from "react-icons/fa";
 
 import Container from "../ui/Container";
 import ToolbarContainer from "../ui/Toolbar";
-import Button from "../ui/Button";
+import { IconButton } from "../ui/Button";
 
 type QueryEditorProps = {
   value: string;
@@ -13,7 +14,10 @@ function QueryEditor({ value, onChange }: Readonly<QueryEditorProps>) {
   return (
     <Container $gridArea="query-editor">
       <ToolbarContainer>
-        <Button>Run</Button>
+        <IconButton>
+          Run
+          <FaPlay />
+        </IconButton>
       </ToolbarContainer>
       <Editor
         height="100%"

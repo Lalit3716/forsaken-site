@@ -1,12 +1,17 @@
+import { BiImport } from "react-icons/bi";
+
 import Container from "../ui/Container";
 import ToolbarContainer from "../ui/Toolbar";
-import Button from "../ui/Button";
+import { IconButton } from "../ui/Button";
 
 function QueryResultViewer() {
   return (
     <Container $gridArea="query-result-viewer">
       <ToolbarContainer>
-        <Button>Export</Button>
+        <IconButton>
+          Export
+          <BiImport />
+        </IconButton>
       </ToolbarContainer>
       <p>Query Result Viewer</p>
     </Container>

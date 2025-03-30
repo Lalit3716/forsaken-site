@@ -4,19 +4,28 @@ import { IconButton } from "../ui/Button";
 import { GridArea } from "../ui/Container";
 import ToolbarContainer from "../ui/Toolbar";
 import { Select } from "../ui/Select";
+import { useDatasourceStore } from "../../stores/datasource.store";
 
 function DatasourceSection() {
+  const loading = useDatasourceStore((state) => state.loading);
+  const availableDatasources = useDatasourceStore(
+    (state) => state.availableDatasources
+  );
+  const loadDatasource = useDatasourceStore((state) => state.loadDatasource);
+  const selectedDatasource = useDatasourceStore(
+    (state) => state.selectedDatasource
+  );
+
+  const handleSelectDatasource = async (datasource: string) => {
+    if (datasource) await loadDatasource(datasource);
+  };
+
   return (
     <GridArea $gridArea="datasource-section">
       <ToolbarContainer>
         <Select
-          options={[
-            { label: "Select datasource", value: "" },
-            { label: "Datasource 1", value: "1" },
-            { label: "Datasource 2", value: "2" },
-            { label: "Datasource 3", value: "3" },
-          ]}
-          onChange={() => {}}
+          options={availableDatasources}
+          onChange={handleSelectDatasource}
         />
         <IconButton
           text="Add Datasource"
@@ -24,7 +33,9 @@ function DatasourceSection() {
           onClick={() => {}}
         />
       </ToolbarContainer>
-      <p>Datasource Section</p>
+      <p>
+        {loading ? "Loading..." : JSON.stringify(selectedDatasource?.dataSet)}
+      </p>
     </GridArea>
   );
 }

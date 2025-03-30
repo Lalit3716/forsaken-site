@@ -11,10 +11,7 @@ import { Badge } from "../ui/Badge";
 import { exportToCSV } from "../../utils/export";
 
 function QueryResultViewer() {
-  const loading = useQueryStore((state) => state.loading);
-  const result = useQueryStore((state) => state.result);
-  const executionTime = useQueryStore((state) => state.executionTime);
-  const selectedQuery = useQueryStore((state) => state.selectedQuery);
+  const { loading, result, executionTime, selectedQuery } = useQueryStore();
 
   const handleExport = () => {
     if (result) {

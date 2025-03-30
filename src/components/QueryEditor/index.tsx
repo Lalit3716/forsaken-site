@@ -16,20 +16,20 @@ function QueryEditor() {
   const [value, setValue] = useState("");
   const [queryName, setQueryName] = useState("");
   const [open, setOpen] = useState(false);
-  const queries = useQueryStore((state) => state.queries);
-  const selectedQuery = useQueryStore((state) => state.selectedQuery);
-  const selectedDatasource = useDatasourceStore(
-    (state) => state.selectedDatasource
-  );
-  const setSelectedQuery = useQueryStore((state) => state.setSelectedQuery);
-  const setSelectedDatasourceById = useDatasourceStore(
-    (state) => state.setSelectedDatasourceById
-  );
-  const runQuery = useQueryStore((state) => state.runQuery);
-  const saveQuery = useQueryStore((state) => state.saveQuery);
-  const updateQuery = useQueryStore((state) => state.updateQuery);
-  const result = useQueryStore((state) => state.result);
-  const executionTime = useQueryStore((state) => state.executionTime);
+
+  const {
+    queries,
+    selectedQuery,
+    setSelectedQuery,
+    runQuery,
+    saveQuery,
+    updateQuery,
+    result,
+    executionTime,
+  } = useQueryStore();
+  const { setSelectedDatasourceById, selectedDatasource } =
+    useDatasourceStore();
+
   const handleSelectQuery = (queryId: string) => {
     const query = queries.find((q) => q.id === queryId);
     if (query) {

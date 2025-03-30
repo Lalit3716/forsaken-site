@@ -13,18 +13,14 @@ import { useQueryStore } from "../../stores/queries.store";
 
 function DatasourceSection() {
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const loading = useDatasourceStore((state) => state.loading);
-  const availableDatasources = useDatasourceStore(
-    (state) => state.availableDatasources
-  );
-  const loadDatasource = useDatasourceStore((state) => state.loadDatasource);
-  const selectedDatasource = useDatasourceStore(
-    (state) => state.selectedDatasource
-  );
-  const addCustomDatasource = useDatasourceStore(
-    (state) => state.addCustomDatasource
-  );
-  const clearSelectedQuery = useQueryStore((state) => state.clearSelectedQuery);
+  const {
+    loading,
+    availableDatasources,
+    loadDatasource,
+    selectedDatasource,
+    addCustomDatasource,
+  } = useDatasourceStore();
+  const { clearSelectedQuery } = useQueryStore();
 
   const handleSelectDatasource = async (datasource: string) => {
     if (datasource) {

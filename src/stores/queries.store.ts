@@ -26,20 +26,20 @@ const DEFAULT_QUERIES = [
   },
   {
     id: "1",
-    name: "Query 1",
-    query: "SELECT * FROM customers",
+    name: "Customers from Sweden",
+    query: "SELECT * FROM customers WHERE country = 'Sweden';",
     datasourceId: "customers",
   },
   {
     id: "2",
-    name: "Query 2",
-    query: "SELECT * FROM orders",
+    name: "Latest 10 orders",
+    query: "SELECT * FROM orders ORDER BY order_date DESC LIMIT 10;",
     datasourceId: "orders",
   },
   {
     id: "3",
-    name: "Query 3",
-    query: "SELECT * FROM products",
+    name: "Products in stock",
+    query: "SELECT * FROM products WHERE unitsInStock > 0;",
     datasourceId: "products",
   },
 ];

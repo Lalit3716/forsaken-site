@@ -8,6 +8,7 @@ import { Select } from "../ui/Select";
 import { useDatasourceStore } from "../../stores/datasource.store";
 import { Table } from "../ui/Table";
 import { Loading } from "../ui/Loading";
+import { Title } from "../ui/Title";
 
 function DatasourceSection() {
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -60,6 +61,7 @@ function DatasourceSection() {
   return (
     <GridArea $gridArea="datasource-section">
       <ToolbarContainer>
+        <Title>Datasource Viewer</Title>
         <Select
           value={selectedDatasource?.id ?? ""}
           options={availableDatasources}

@@ -7,6 +7,7 @@ import { IconButton } from "../ui/Button";
 import { Select } from "../ui/Select";
 import { useQueryStore } from "../../stores/queries.store";
 import { useDatasourceStore } from "../../stores/datasource.store";
+import { Title } from "../ui/Title";
 
 function QueryEditor() {
   const queries = useQueryStore((state) => state.queries);
@@ -27,6 +28,7 @@ function QueryEditor() {
   return (
     <GridArea $gridArea="query-editor">
       <ToolbarContainer>
+        <Title>Query Editor</Title>
         <Select
           value={selectedQuery?.id ?? ""}
           options={queries.map((q) => ({ label: q.name, value: q.id }))}

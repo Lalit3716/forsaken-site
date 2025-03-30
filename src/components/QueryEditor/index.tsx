@@ -1,19 +1,27 @@
 import { Editor } from "@monaco-editor/react";
-import { FaPlay } from "react-icons/fa";
+import { FaPlay, FaSave } from "react-icons/fa";
 
 import Container from "../ui/Container";
 import ToolbarContainer from "../ui/Toolbar";
 import { IconButton } from "../ui/Button";
+import { SelectContainer, Select } from "../ui/Select";
 
-type QueryEditorProps = {
-  value: string;
-  onChange: (value?: string) => void;
-};
-
-function QueryEditor({ value, onChange }: Readonly<QueryEditorProps>) {
+function QueryEditor() {
   return (
     <Container $gridArea="query-editor">
       <ToolbarContainer>
+        <SelectContainer>
+          <Select>
+            <option value="">Select saved queries</option>
+            <option value="1">Query 1</option>
+            <option value="2">Query 2</option>
+            <option value="3">Query 3</option>
+          </Select>
+        </SelectContainer>
+        <IconButton>
+          Save Query
+          <FaSave />
+        </IconButton>
         <IconButton>
           Run
           <FaPlay />
@@ -23,8 +31,6 @@ function QueryEditor({ value, onChange }: Readonly<QueryEditorProps>) {
         height="100%"
         defaultLanguage="sql"
         theme="vs-light"
-        value={value}
-        onChange={onChange}
         options={{
           minimap: { enabled: false },
           scrollBeyondLastLine: false,

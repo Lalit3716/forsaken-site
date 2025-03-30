@@ -6,9 +6,9 @@ import QueryResultViewer from "./components/QueryResultViewer";
 function App() {
   return (
     <Layout>
-      <QueryEditor>Query Editor</QueryEditor>
-      <DatasourceSection>Datasource Section</DatasourceSection>
-      <QueryResultViewer>Query Result Viewer</QueryResultViewer>
+      <QueryEditor />
+      <DatasourceSection />
+      <QueryResultViewer />
     </Layout>
   );
 }

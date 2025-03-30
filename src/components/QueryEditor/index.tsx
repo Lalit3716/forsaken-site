@@ -28,6 +28,8 @@ function QueryEditor() {
   const runQuery = useQueryStore((state) => state.runQuery);
   const saveQuery = useQueryStore((state) => state.saveQuery);
   const updateQuery = useQueryStore((state) => state.updateQuery);
+  const result = useQueryStore((state) => state.result);
+  const executionTime = useQueryStore((state) => state.executionTime);
   const handleSelectQuery = (queryId: string) => {
     const query = queries.find((q) => q.id === queryId);
     if (query) {
@@ -51,6 +53,8 @@ function QueryEditor() {
       name: queryName,
       query: value,
       datasourceId: selectedDatasource!.id,
+      result: result ?? undefined,
+      executionTime: executionTime ?? undefined,
     };
 
     if (selectedQuery) {

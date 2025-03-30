@@ -84,8 +84,9 @@ export const useDatasourceStore = create<DatasourceStore>((set, get) => ({
     await get().loadDatasource(id);
     set({ selectedDatasource: get().datasources[id] });
   },
-  setSelectedDatasource: (datasource: Datasource) =>
-    set({ selectedDatasource: datasource }),
+  setSelectedDatasource: (datasource: Datasource) => {
+    set({ selectedDatasource: datasource });
+  },
   loadDatasource: async (id: string) => {
     // Return existing datasource if already loaded
     const existing = get().datasources[id];

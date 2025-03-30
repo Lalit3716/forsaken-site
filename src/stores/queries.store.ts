@@ -6,8 +6,8 @@ export type Query = {
   id: string;
   name: string;
   query: string;
-  result?: DataSet;
-  executionTime?: number;
+  result?: DataSet | null;
+  executionTime?: number | null;
   datasourceId: string;
 };
 
@@ -59,7 +59,8 @@ export const useQueryStore = create<QueryStore>((set, get) => ({
   selectedQuery: null,
   result: null,
   executionTime: null,
-  setSelectedQuery: (query: Query | null) => set({ selectedQuery: query }),
+  setSelectedQuery: (query: Query | null) =>
+    set({ selectedQuery: query, result: null, executionTime: null }),
   addQuery: (query: Query) =>
     set((state) => ({ queries: [...state.queries, query] })),
   updateQuery: (query: Query) => {
@@ -97,5 +98,6 @@ export const useQueryStore = create<QueryStore>((set, get) => ({
       selectedQuery: query,
     }));
   },
-  clearSelectedQuery: () => set({ selectedQuery: null }),
+  clearSelectedQuery: () =>
+    set({ selectedQuery: null, result: null, executionTime: null }),
 }));

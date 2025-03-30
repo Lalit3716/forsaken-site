@@ -82,7 +82,6 @@ export const useDatasourceStore = create<DatasourceStore>((set, get) => ({
     }
 
     await get().loadDatasource(id);
-    set({ selectedDatasource: get().datasources[id] });
   },
   setSelectedDatasource: (datasource: Datasource) => {
     set({ selectedDatasource: datasource });
@@ -107,9 +106,8 @@ export const useDatasourceStore = create<DatasourceStore>((set, get) => ({
         [id]: dataSource,
       },
       selectedDatasource: dataSource,
+      loading: false,
     }));
-
-    set({ loading: false });
 
     return dataSource;
   },

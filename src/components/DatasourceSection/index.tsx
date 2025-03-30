@@ -20,7 +20,7 @@ function DatasourceSection() {
     selectedDatasource,
     addCustomDatasource,
   } = useDatasourceStore();
-  const { clearSelectedQuery } = useQueryStore();
+  const clearSelectedQuery = useQueryStore((state) => state.clearSelectedQuery);
 
   const handleSelectDatasource = async (datasource: string) => {
     if (datasource) {

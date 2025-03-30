@@ -5,6 +5,7 @@ import { GridArea } from "../ui/Container";
 import ToolbarContainer from "../ui/Toolbar";
 import { Select } from "../ui/Select";
 import { useDatasourceStore } from "../../stores/datasource.store";
+import { Table } from "../ui/Table";
 
 function DatasourceSection() {
   const loading = useDatasourceStore((state) => state.loading);
@@ -20,6 +21,17 @@ function DatasourceSection() {
     if (datasource) await loadDatasource(datasource);
   };
 
+  const renderContent = () => {
+    if (loading) return <p>Loading...</p>;
+    if (!selectedDatasource) return <p>Select a datasource to view data</p>;
+    return (
+      <Table
+        columns={selectedDatasource.dataSet.columns}
+        data={selectedDatasource.dataSet.data}
+      />
+    );
+  };
+
   return (
     <GridArea $gridArea="datasource-section">
       <ToolbarContainer>
@@ -33,9 +45,7 @@ function DatasourceSection() {
           onClick={() => {}}
         />
       </ToolbarContainer>
-      <p>
-        {loading ? "Loading..." : JSON.stringify(selectedDatasource?.dataSet)}
-      </p>
+      {renderContent()}
     </GridArea>
   );
 }

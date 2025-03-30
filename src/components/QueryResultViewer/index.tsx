@@ -8,7 +8,7 @@ function QueryResultViewer() {
   return (
     <GridArea $gridArea="query-result-viewer">
       <ToolbarContainer>
-        <IconButton text="Export" icon={<BiImport />} onClick={() => {}} />
+        <IconButton icon={<BiImport />} onClick={() => {}} />
       </ToolbarContainer>
       <p>Query Result Viewer</p>
     </GridArea>

@@ -8,11 +8,22 @@ import { Table } from "../ui/Table";
 import { useQueryStore } from "../../stores/queries.store";
 import { Loading } from "../ui/Loading";
 import { Badge } from "../ui/Badge";
+import { exportToCSV } from "../../utils/export";
 
 function QueryResultViewer() {
   const loading = useQueryStore((state) => state.loading);
   const result = useQueryStore((state) => state.result);
   const executionTime = useQueryStore((state) => state.executionTime);
+  const selectedQuery = useQueryStore((state) => state.selectedQuery);
+
+  const handleExport = () => {
+    if (result) {
+      const filename = selectedQuery
+        ? `${selectedQuery.name}.csv`
+        : "export.csv";
+      exportToCSV(result, filename);
+    }
+  };
 
   const renderContent = () => {
     if (loading) return <Loading />;
@@ -33,7 +44,12 @@ function QueryResultViewer() {
         {executionTime !== null && (
           <Badge>Execution Time: {executionTime}ms</Badge>
         )}
-        <IconButton text="Export" icon={<BiImport />} onClick={() => {}} />
+        <IconButton
+          text="Export"
+          icon={<BiImport />}
+          onClick={handleExport}
+          disabled={!result}
+        />
       </ToolbarContainer>
       {renderContent()}
     </GridArea>

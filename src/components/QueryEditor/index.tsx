@@ -10,6 +10,7 @@ import { useQueryStore } from "../../stores/queries.store";
 import { useDatasourceStore } from "../../stores/datasource.store";
 import { Title } from "../ui/Title";
 import { Modal } from "../ui/Modal";
+import { StyledInput } from "../ui/Input";
 
 function QueryEditor() {
   const [open, setOpen] = useState(false);
@@ -41,7 +42,8 @@ function QueryEditor() {
         primaryAction={{ label: "Save", onClick: () => {} }}
         secondaryAction={{ label: "Cancel", onClick: closeModal }}
       >
-        <input />
+        <label htmlFor="query-name">Query Name</label>
+        <StyledInput id="query-name" />
       </Modal>
       <ToolbarContainer>
         <Title>Query Editor</Title>

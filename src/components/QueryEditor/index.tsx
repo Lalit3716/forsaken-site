@@ -1,5 +1,8 @@
-import Container from "../ui/Container";
 import { Editor } from "@monaco-editor/react";
+
+import Container from "../ui/Container";
+import ToolbarContainer from "../ui/Toolbar";
+import Button from "../ui/Button";
 
 type QueryEditorProps = {
   value: string;
@@ -9,6 +12,9 @@ type QueryEditorProps = {
 function QueryEditor({ value, onChange }: Readonly<QueryEditorProps>) {
   return (
     <Container $gridArea="query-editor">
+      <ToolbarContainer>
+        <Button>Run</Button>
+      </ToolbarContainer>
       <Editor
         height="100%"
         defaultLanguage="sql"

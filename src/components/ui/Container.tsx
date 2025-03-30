@@ -5,10 +5,9 @@ const Container = styled.div<{
 }>`
   grid-area: ${({ $gridArea }) => $gridArea};
   background-color: var(--background-color);
-  border: 1px solid var(--primary-color);
+  border: 1px solid var(--border-color);
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
 `;
 
 export default Container;

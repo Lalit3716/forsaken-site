@@ -16,7 +16,7 @@ function QueryEditor() {
   const setSelectedDatasourceById = useDatasourceStore(
     (state) => state.setSelectedDatasourceById
   );
-
+  const runQuery = useQueryStore((state) => state.runQuery);
   const handleSelectQuery = (queryId: string) => {
     const query = queries.find((q) => q.id === queryId);
     if (query) {
@@ -35,7 +35,7 @@ function QueryEditor() {
           onChange={handleSelectQuery}
         />
         <IconButton text="Save Query" icon={<FaSave />} onClick={() => {}} />
-        <IconButton text="Run" icon={<FaPlay />} onClick={() => {}} />
+        <IconButton text="Run" icon={<FaPlay />} onClick={runQuery} />
       </ToolbarContainer>
       <Editor
         height="100%"

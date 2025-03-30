@@ -8,8 +8,7 @@ type TableProps = {
 const TableContainer = styled.div`
   width: 100%;
   overflow-x: auto;
-  border: 1px solid var(--border-color);
-  border-radius: 4px;
+  border: 3px solid var(--border-color);
 `;
 
 const StyledTable = styled.table`
@@ -24,12 +23,6 @@ const TableHeader = styled.thead`
 
 const TableBody = styled.tbody`
   background-color: var(--background-color);
-`;
-
-const TableRow = styled.tr`
-  &:nth-child(even) {
-    background-color: var(--secondary-color);
-  }
 `;
 
 const TableCell = styled.td`
@@ -53,21 +46,21 @@ export const Table = ({ columns, data }: TableProps) => {
     <TableContainer>
       <StyledTable>
         <TableHeader>
-          <TableRow>
+          <tr>
             {columns.map((column) => (
               <TableHeaderCell key={column}>{column}</TableHeaderCell>
             ))}
-          </TableRow>
+          </tr>
         </TableHeader>
         <TableBody>
           {data.map((row, rowIndex) => (
-            <TableRow key={rowIndex}>
+            <tr key={rowIndex}>
               {columns.map((column) => (
                 <TableCell key={`${rowIndex}-${column}`}>
                   {String(row[column] ?? "")}
                 </TableCell>
               ))}
-            </TableRow>
+            </tr>
           ))}
         </TableBody>
       </StyledTable>

@@ -76,6 +76,11 @@ export const useDatasourceStore = create<DatasourceStore>((set, get) => ({
   datasources: {},
   selectedDatasource: null,
   setSelectedDatasourceById: async (id: string) => {
+    if (!id) {
+      set({ selectedDatasource: null });
+      return;
+    }
+
     await get().loadDatasource(id);
     set({ selectedDatasource: get().datasources[id] });
   },

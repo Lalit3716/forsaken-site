@@ -4,20 +4,21 @@ import { FaPlay, FaSave } from "react-icons/fa";
 import { GridArea } from "../ui/Container";
 import ToolbarContainer from "../ui/Toolbar";
 import { IconButton } from "../ui/Button";
-import { SelectContainer, Select } from "../ui/Select";
+import { Select } from "../ui/Select";
 
 function QueryEditor() {
   return (
     <GridArea $gridArea="query-editor">
       <ToolbarContainer>
-        <SelectContainer>
-          <Select>
-            <option value="">Select saved queries</option>
-            <option value="1">Query 1</option>
-            <option value="2">Query 2</option>
-            <option value="3">Query 3</option>
-          </Select>
-        </SelectContainer>
+        <Select
+          options={[
+            { label: "Select saved queries", value: "" },
+            { label: "Query 1", value: "1" },
+            { label: "Query 2", value: "2" },
+            { label: "Query 3", value: "3" },
+          ]}
+          onChange={() => {}}
+        />
         <IconButton>
           Save Query
           <FaSave />

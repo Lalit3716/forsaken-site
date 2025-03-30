@@ -1,6 +1,17 @@
 import styled from "styled-components";
 
-export const Select = styled.select`
+type SelectOption = {
+  label: string;
+  value: string;
+};
+
+type SelectProps = {
+  options: SelectOption[];
+  defaultValue?: string;
+  onChange: (value: string) => void;
+};
+
+export const StyledSelect = styled.select`
   background-color: var(--secondary-color);
   color: var(--text-color);
   border: 1px solid var(--border-color);
@@ -26,3 +37,20 @@ export const SelectContainer = styled.div`
   flex-direction: column;
   gap: 0.25rem;
 `;
+
+export const Select = ({ options, defaultValue, onChange }: SelectProps) => {
+  return (
+    <SelectContainer>
+      <StyledSelect
+        defaultValue={defaultValue}
+        onChange={(e) => onChange(e.target.value)}
+      >
+        {options.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </StyledSelect>
+    </SelectContainer>
+  );
+};

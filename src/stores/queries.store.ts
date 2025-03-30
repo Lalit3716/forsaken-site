@@ -29,7 +29,7 @@ type QueryStore = {
 const DEFAULT_QUERIES = [
   {
     id: "-1",
-    name: "Select saved queries",
+    name: "New Query",
     query: "",
     datasourceId: "",
   },
@@ -73,7 +73,7 @@ export const useQueryStore = create<QueryStore>((set, get) => ({
   runQuery: async (newQuery?: Query) => {
     const query = get().selectedQuery;
 
-    if (!query && newQuery) {
+    if (newQuery) {
       const { result, executionTime } = await executeQuery(newQuery);
       set({ result, executionTime });
       return;

@@ -1,12 +1,12 @@
 import { BiImport } from "react-icons/bi";
 
-import Container from "../ui/Container";
+import { GridArea } from "../ui/Container";
 import ToolbarContainer from "../ui/Toolbar";
 import { IconButton } from "../ui/Button";
 
 function QueryResultViewer() {
   return (
-    <Container $gridArea="query-result-viewer">
+    <GridArea $gridArea="query-result-viewer">
       <ToolbarContainer>
         <IconButton>
           Export
@@ -14,7 +14,7 @@ function QueryResultViewer() {
         </IconButton>
       </ToolbarContainer>
       <p>Query Result Viewer</p>
-    </Container>
+    </GridArea>
   );
 }
 

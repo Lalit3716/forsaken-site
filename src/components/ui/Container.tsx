@@ -1,13 +1,18 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-const Container = styled.div<{
-  $gridArea: string;
-}>`
-  grid-area: ${({ $gridArea }) => $gridArea};
+export const Container = styled.div<{ $centered?: boolean }>`
   background-color: var(--background-color);
   border: 1px solid var(--border-color);
   display: flex;
   flex-direction: column;
+  ${({ $centered }) =>
+    $centered &&
+    css`
+      align-items: center;
+      justify-content: center;
+    `}
 `;
 
-export default Container;
+export const GridArea = styled(Container)<{ $gridArea: string }>`
+  grid-area: ${({ $gridArea }) => $gridArea};
+`;

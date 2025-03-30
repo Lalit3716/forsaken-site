@@ -1,14 +1,14 @@
 import { Editor } from "@monaco-editor/react";
 import { FaPlay, FaSave } from "react-icons/fa";
 
-import Container from "../ui/Container";
+import { GridArea } from "../ui/Container";
 import ToolbarContainer from "../ui/Toolbar";
 import { IconButton } from "../ui/Button";
 import { SelectContainer, Select } from "../ui/Select";
 
 function QueryEditor() {
   return (
-    <Container $gridArea="query-editor">
+    <GridArea $gridArea="query-editor">
       <ToolbarContainer>
         <SelectContainer>
           <Select>
@@ -38,7 +38,7 @@ function QueryEditor() {
           wordWrap: "on",
         }}
       />
-    </Container>
+    </GridArea>
   );
 }
 

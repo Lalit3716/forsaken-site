@@ -18,10 +18,11 @@ function DatasourceSection() {
           ]}
           onChange={() => {}}
         />
-        <IconButton>
-          Add Datasource
-          <FaFileImport />
-        </IconButton>
+        <IconButton
+          text="Add Datasource"
+          icon={<FaFileImport />}
+          onClick={() => {}}
+        />
       </ToolbarContainer>
       <p>Datasource Section</p>
     </GridArea>

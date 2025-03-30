@@ -19,14 +19,8 @@ function QueryEditor() {
           ]}
           onChange={() => {}}
         />
-        <IconButton>
-          Save Query
-          <FaSave />
-        </IconButton>
-        <IconButton>
-          Run
-          <FaPlay />
-        </IconButton>
+        <IconButton text="Save Query" icon={<FaSave />} onClick={() => {}} />
+        <IconButton text="Run" icon={<FaPlay />} onClick={() => {}} />
       </ToolbarContainer>
       <Editor
         height="100%"

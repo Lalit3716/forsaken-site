@@ -98,6 +98,12 @@ The application will be available at `http://localhost:5173`
    - Export results to csv file using "Export" button
    - Shows a dummy execution time for query
 
+## Design
+
+| Initial Sketch                     | Final                                  |
+| ---------------------------------- | -------------------------------------- |
+| ![Initial Sketch](docs/design.jpg) | ![Final Design](docs/final-design.png) |
+
 ## Performance Metrics
 
 Here are the key performance metrics:

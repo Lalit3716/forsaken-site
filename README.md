@@ -49,7 +49,7 @@ src/
 
 ## Architecture
 
-### Core Components
+### Core
 
 1. **Layout System**
 
@@ -68,15 +68,68 @@ src/
 
    - Modular component design with clear separation of concerns
    - Reusable UI components in the `ui/` directory
-   - Feature-specific components in their respective directories
+   - Feature-specific components i.e QueryEditor, DatasourceSection, QueryResultViewer in their respective directories
    - Consistent styling using styled-components and css variables for colors
 
 4. **Data Flow**
 
-   - Unidirectional data flow pattern
    - Clear separation between data fetching and presentation
    - Lazy loading of datasources for optimal performance
    - Efficient data caching strategy for datasources and queries
+
+### Data structures
+
+There are 3 main data structures in this app:
+
+1. **DataSet** (`datasource.store.ts`)
+
+   ```typescript
+   type DataSet = {
+     columns: string[];
+     data: Record<string, unknown>[];
+   };
+   ```
+
+   - Represents the core data structure for both datasources and query results
+   - `columns`: Array of column names
+   - `data`: Array of records where each record is a key-value pair mapping column names to values
+   - Used for both datasource storage and query result display
+   - Supports CSV export functionality
+
+2. **Datasource** (`datasource.store.ts`)
+
+   ```typescript
+   type Datasource = {
+     id: string;
+     name: string;
+     dataSet: DataSet;
+   };
+   ```
+
+   - Represents a data source that can be queried
+   - `id`: Unique identifier for the datasource
+   - `name`: Human-readable name of the datasource
+   - `dataSet`: The actual data stored in DataSet format
+   - Can be either built-in or custom imported via CSV
+
+3. **Query** (`queries.store.ts`)
+   ```typescript
+   type Query = {
+     id: string;
+     name: string;
+     query: string;
+     result?: DataSet | null;
+     executionTime?: number | null;
+     datasourceId: string;
+   };
+   ```
+   - Represents a SQL query that can be executed
+   - `id`: Unique identifier for the query
+   - `name`: Human-readable name of the query
+   - `query`: The actual SQL query string
+   - `result`: Optional DataSet containing query results
+   - `executionTime`: Optional execution time in milliseconds
+   - `datasourceId`: Reference to the datasource this query operates on
 
 ### Zustand Data Stores
 

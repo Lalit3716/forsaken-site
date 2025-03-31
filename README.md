@@ -97,6 +97,36 @@ The application will be available at `http://localhost:5173`
    - Export results to csv file using "Export" button
    - Shows a dummy execution time for query
 
+## Performance Metrics
+
+Here are the key performance metrics:
+
+![Lighthouse Score](docs/lighthouse.png)
+
+- Chrome Devtools Lighthouse
+  - **First Contentful Paint**: ~0.4 seconds
+  - **Largest Contentful Paint**: ~1.4 seconds
+  - **Total Blocking time**: 20ms
+- `useGetPerformance` hook
+  - Custom hook that uses `window.performance` API to calculate time to render a component
+  - `Time to render = endTime - startTime`
+  - **`App` component initial load/render time**: ~135ms
+- React-Scan
+  - Library which helps in profiling a react application, it continously displays frames per second and alerts any frame drops in the app
+  - Application runs at constant 60FPS for the entire time, rarely dropping to 40FPS
+
+## Performance Optimizations
+
+- Lazily load datasources
+  - We have 10 inbuilt datasources that are loading according to user demand instead of loading all of them at once on initial page load
+  - After a datasource is loaded it is cached for future uses, improving performance
+- Table for Large datasets
+  - With the help of `react-scan`, it was clear that the app was taking major frame drops while rendering tables with many rows
+  - Implemented a simple pagination mechanism to prevent rendering all rows at once, reducing re-rendering elements on the screen
+- Zustand selective states
+  - Again with help of `react-scan`, I came to know that `Table` component was rendering twice in "Datasource Section" due to completely unrelated state change in "Query Store"
+  - To avoid this, we can access only what's needed(a function for instance) instead of entire query store which holds frequently changing state for queries that is unrelated to "Datasource Section"
+
 ## Thanks
 
 Thank you for checking out this project!

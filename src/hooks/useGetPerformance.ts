@@ -5,7 +5,7 @@ type PerformanceType = {
 };
 
 export const useGetPerformance = ({ screenName }: PerformanceType) => {
-  const [startTime, setStartTime] = useState(0);
+  const startTime = performance.now();
   const [loadTime, setLoadTime] = useState("");
 
   const getPerformanceReport = () => {
@@ -20,7 +20,6 @@ export const useGetPerformance = ({ screenName }: PerformanceType) => {
   };
 
   useEffect(() => {
-    setStartTime(window.performance.now());
     getPerformanceReport();
   }, []);
 

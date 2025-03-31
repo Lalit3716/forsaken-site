@@ -93,6 +93,7 @@ The application will be available at `http://localhost:5173`
    - User can edit saved queries using the same button
 
 3. **Viewing Results**
+
    - Query results are displayed in a tabular format with pagination
    - Export results to csv file using "Export" button
    - Shows a dummy execution time for query
@@ -110,7 +111,7 @@ Here are the key performance metrics:
 - `useGetPerformance` hook
   - Custom hook that uses `window.performance` API to calculate time to render a component
   - `Time to render = endTime - startTime`
-  - **`App` component initial load/render time**: ~135ms
+  - **`App` component initial load/render time**: ~150ms
 - React-Scan
   - Library which helps in profiling a react application, it continously displays frames per second and alerts any frame drops in the app
   - Application runs at constant 60FPS for the entire time, rarely dropping to 40FPS

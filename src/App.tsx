@@ -5,9 +5,7 @@ import QueryResultViewer from "./components/QueryResultViewer";
 import { useGetPerformance } from "./hooks/useGetPerformance";
 
 function App() {
-  useGetPerformance({
-    screenName: "App",
-  });
+  useGetPerformance();
 
   return (
     <Layout>

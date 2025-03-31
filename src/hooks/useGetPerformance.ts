@@ -1,29 +1,16 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
-type PerformanceType = {
-  screenName: string;
-};
-
-export const useGetPerformance = ({ screenName }: PerformanceType) => {
-  const startTime = performance.now();
-  const [loadTime, setLoadTime] = useState("");
-
-  const getPerformanceReport = () => {
-    const endTime = window.performance.now();
-    const timeToRender = endTime - startTime;
-    const logMessage = `${screenName} Load Time: ${timeToRender.toFixed(
-      0
-    )} milliseconds`;
-
-    setLoadTime(logMessage);
-    console.log(logMessage);
-  };
-
+export const useGetPerformance = () => {
   useEffect(() => {
-    getPerformanceReport();
-  }, []);
+    const perfObserver = new PerformanceObserver((observedEntries) => {
+      const entry: PerformanceEntry =
+        observedEntries.getEntriesByType("navigation")[0];
+      console.log("pageload time: ", entry.duration);
+    });
 
-  return {
-    loadTime,
-  };
+    perfObserver.observe({
+      type: "navigation",
+      buffered: true,
+    });
+  }, []);
 };

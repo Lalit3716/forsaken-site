@@ -2,6 +2,12 @@
 
 A modern web application that allows users to interact with and analyze data through SQL queries. The application provides a user-friendly interface for managing data sources, writing SQL queries, and visualizing query results.
 
+## Design
+
+| Initial Sketch                     | Final                                  |
+| ---------------------------------- | -------------------------------------- |
+| ![Initial Sketch](docs/design.jpg) | ![Final Design](docs/final-design.png) |
+
 ## Features
 
 - Import and manage multiple data sources
@@ -40,6 +46,87 @@ src/
 │   └── query.ts           # Query execution utilities
 └── App.tsx                # Main application component
 ```
+
+## Architecture
+
+### Core Components
+
+1. **Layout System**
+
+   - Grid-based layout using styled-components
+   - Design with fixed grid areas for different sections
+   - Consistent spacing and alignment across components
+
+2. **State Management**
+
+   - Uses Zustand for global state management
+   - Separate stores for datasources and queries
+   - Selective state updates to prevent unnecessary re-renders
+   - Caching mechanism for loaded datasources
+
+3. **Component Structure**
+
+   - Modular component design with clear separation of concerns
+   - Reusable UI components in the `ui/` directory
+   - Feature-specific components in their respective directories
+   - Consistent styling using styled-components and css variables for colors
+
+4. **Data Flow**
+
+   - Unidirectional data flow pattern
+   - Clear separation between data fetching and presentation
+   - Lazy loading of datasources for optimal performance
+   - Efficient data caching strategy for datasources and queries
+
+### Zustand Data Stores
+
+The application uses two main Zustand stores to manage state:
+
+1. **Datasource Store** (`datasource.store.ts`)
+
+   ```typescript
+   type DatasourceStore = {
+     loading: boolean;
+     availableDatasources: { label: string; value: string }[];
+     datasources: Record<string, Datasource>;
+     selectedDatasource: Datasource | null;
+     // Actions
+     setSelectedDatasource: (datasource: Datasource) => void;
+     setSelectedDatasourceById: (id: string) => Promise<void>;
+     loadDatasource: (id: string) => Promise<Datasource>;
+     addCustomDatasource: (file: File) => Promise<Datasource>;
+   };
+   ```
+
+   - Manages available and loaded data sources
+   - Handles data source selection and loading
+   - Supports custom data source imports via CSV
+   - Implements caching for loaded data sources
+
+2. **Query Store** (`queries.store.ts`)
+
+   ```typescript
+   type QueryStore = {
+     loading: boolean;
+     queries: Query[];
+     selectedQuery: Query | null;
+     result: DataSet | null;
+     executionTime: number | null;
+     // Actions
+     setSelectedQuery: (query: Query | null) => void;
+     addQuery: (query: Query) => void;
+     updateQuery: (query: Query) => void;
+     runQuery: (query?: Query) => void;
+     saveQuery: (query: Query) => void;
+     clearSelectedQuery: () => void;
+   };
+   ```
+
+   - Manages SQL queries and their execution
+   - Handles query selection and results
+   - Supports query saving and updating
+   - Tracks query execution time
+   - Includes default example queries
 
 ## Getting Started
 
@@ -98,15 +185,9 @@ The application will be available at `http://localhost:5173`
    - Export results to csv file using "Export" button
    - Shows a dummy execution time for query
 
-## Design
-
-| Initial Sketch                     | Final                                  |
-| ---------------------------------- | -------------------------------------- |
-| ![Initial Sketch](docs/design.jpg) | ![Final Design](docs/final-design.png) |
-
 ## Performance Metrics
 
-Here are the key performance metrics:
+Key performance metrics:
 
 ![Lighthouse Score](docs/lighthouse.png)
 

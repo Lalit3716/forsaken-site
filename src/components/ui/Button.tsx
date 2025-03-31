@@ -20,6 +20,10 @@ export const StyledButton = styled.button<{
   font-size: 0.875rem;
   transition: opacity 0.2s;
 
+  &:active {
+    opacity: 0.8;
+  }
+
   ${({ $disabled }) =>
     $disabled &&
     css`
@@ -29,11 +33,11 @@ export const StyledButton = styled.button<{
       &:hover {
         opacity: 0.5;
       }
-    `}
 
-  &:active {
-    opacity: 0.8;
-  }
+      &:active {
+        opacity: 0.5;
+      }
+    `}
 `;
 
 export const StyledIconButton = styled(StyledButton)`
@@ -50,7 +54,10 @@ export const IconButton = ({
   disabled,
 }: IconButtonProps) => {
   return (
-    <StyledIconButton onClick={onClick} $disabled={disabled}>
+    <StyledIconButton
+      onClick={() => !disabled && onClick()}
+      $disabled={disabled}
+    >
       {text}
       {icon}
     </StyledIconButton>

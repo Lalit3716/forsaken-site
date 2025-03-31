@@ -116,23 +116,20 @@ function QueryEditor() {
           text={selectedQuery ? "Edit Query" : "Save Query"}
           icon={<FaSave />}
           onClick={() => setOpen(true)}
-          disabled={!selectedDatasource}
+          disabled={!selectedDatasource || !value}
         />
         <IconButton
           text="Run"
           icon={<FaPlay />}
           onClick={handleRunQuery}
-          disabled={!selectedDatasource}
+          disabled={!selectedDatasource || !value}
         />
       </ToolbarContainer>
       <Editor
         height="100%"
         defaultLanguage="sql"
         theme="vs-light"
-        defaultValue={
-          selectedQuery?.query ??
-          (!selectedDatasource ? "-- Select a datasource to run queries." : "")
-        }
+        defaultValue={"-- Select a datasource to run queries."}
         value={value}
         onChange={(value) => setValue(value ?? "")}
         options={{

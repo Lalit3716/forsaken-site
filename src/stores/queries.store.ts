@@ -22,7 +22,7 @@ type QueryStore = {
   updateQuery: (query: Query) => void;
   setLoading: (loading: boolean) => void;
   clearSelectedQuery: () => void;
-  runQuery: (query?: Query) => void;
+  runQuery: (query: Query, isDirty?: boolean) => void;
   saveQuery: (query: Query) => void;
 };
 
@@ -70,10 +70,10 @@ export const useQueryStore = create<QueryStore>((set, get) => ({
     }));
   },
   setLoading: (loading: boolean) => set({ loading }),
-  runQuery: async (newQuery?: Query) => {
+  runQuery: async (newQuery: Query, isDirty?: boolean) => {
     const query = get().selectedQuery;
 
-    if (newQuery) {
+    if (newQuery.id !== query?.id || isDirty) {
       const { result, executionTime } = await executeQuery(newQuery);
       set({ result, executionTime });
       return;
@@ -82,14 +82,14 @@ export const useQueryStore = create<QueryStore>((set, get) => ({
     if (!query) return;
 
     if (query.result) {
-      get().updateQuery({ ...query, executionTime: 0 });
+      get().updateQuery({ ...newQuery, executionTime: 0 });
       set({ result: query.result, executionTime: query.executionTime });
       return;
     }
 
     set({ loading: true });
     const { result, executionTime } = await executeQuery(query);
-    get().updateQuery({ ...query, result, executionTime });
+    get().updateQuery({ ...newQuery, result, executionTime });
     set({ loading: false, result, executionTime });
   },
   saveQuery: (query: Query) => {

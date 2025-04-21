@@ -15,6 +15,7 @@ import { StyledInput } from "../ui/Input";
 const MemoizedEditor = memo(Editor);
 
 function QueryEditor() {
+  const [isDirty, setIsDirty] = useState(false);
   const [value, setValue] = useState("");
   const [open, setOpen] = useState(false);
   const queryNameInputRef = useRef<HTMLInputElement | null>(null);
@@ -70,24 +71,34 @@ function QueryEditor() {
   };
 
   const handleRunQuery = () => {
+    let id = new Date().toISOString();
     if (selectedQuery && selectedQuery.id !== "-1") {
-      runQuery();
-    } else {
-      const newQuery = {
-        id: Math.random().toString(),
-        name: "New Query",
-        query: value,
-        datasourceId: selectedDatasource!.id,
-      };
-      runQuery(newQuery);
+      id = selectedQuery.id;
     }
+    const newQuery = {
+      name: "New Query",
+      datasourceId: selectedDatasource!.id,
+      ...selectedQuery,
+      id,
+      query: value,
+    };
+
+    runQuery(newQuery, isDirty);
   };
+
+  const handleOnEditorChange = useCallback(
+    (value?: string) => {
+      setValue(value ?? "");
+      if (selectedQuery && selectedQuery.id !== "-1") {
+        setIsDirty(true);
+      }
+    },
+    [selectedQuery]
+  );
 
   useEffect(() => {
     setValue(selectedQuery?.query ?? "");
-    if (queryNameInputRef.current) {
-      queryNameInputRef.current.value = selectedQuery?.query ?? "";
-    }
+    setIsDirty(false);
   }, [selectedQuery]);
 
   return (
@@ -128,10 +139,7 @@ function QueryEditor() {
         theme="vs-light"
         defaultValue={"-- Select a datasource to run queries."}
         value={value}
-        onChange={useCallback(
-          (value: string | undefined) => setValue(value ?? ""),
-          []
-        )}
+        onChange={handleOnEditorChange}
         options={{
           minimap: { enabled: false },
           scrollBeyondLastLine: false,

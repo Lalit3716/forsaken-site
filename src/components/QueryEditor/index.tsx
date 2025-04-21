@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useRef, useState } from "react";
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Editor } from "@monaco-editor/react";
 import { FaPlay, FaSave } from "react-icons/fa";
 
@@ -93,7 +93,7 @@ function QueryEditor() {
         setIsDirty(true);
       }
     },
-    [selectedQuery]
+    [selectedQuery],
   );
 
   useEffect(() => {
@@ -140,12 +140,15 @@ function QueryEditor() {
         defaultValue={"-- Select a datasource to run queries."}
         value={value}
         onChange={handleOnEditorChange}
-        options={{
-          minimap: { enabled: false },
-          scrollBeyondLastLine: false,
-          fontSize: 16,
-          wordWrap: "on",
-        }}
+        options={useMemo(
+          () => ({
+            minimap: { enabled: false },
+            scrollBeyondLastLine: false,
+            fontSize: 16,
+            wordWrap: "on",
+          }),
+          [],
+        )}
       />
     </GridArea>
   );

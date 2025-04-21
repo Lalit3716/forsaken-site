@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useRef, useState } from "react";
 import { Editor } from "@monaco-editor/react";
 import { FaPlay, FaSave } from "react-icons/fa";
 
@@ -12,10 +12,12 @@ import { Title } from "../ui/Title";
 import { Modal } from "../ui/Modal";
 import { StyledInput } from "../ui/Input";
 
+const MemoizedEditor = memo(Editor);
+
 function QueryEditor() {
   const [value, setValue] = useState("");
-  const [queryName, setQueryName] = useState("");
   const [open, setOpen] = useState(false);
+  const queryNameInputRef = useRef<HTMLInputElement | null>(null);
 
   const {
     queries,
@@ -47,6 +49,8 @@ function QueryEditor() {
   };
 
   const handleSaveQuery = () => {
+    const queryName = queryNameInputRef.current?.value;
+
     if (!queryName) return;
     const newQuery = {
       id: selectedQuery?.id ?? new Date().toISOString(),
@@ -80,12 +84,9 @@ function QueryEditor() {
   };
 
   useEffect(() => {
-    if (selectedQuery) {
-      setValue(selectedQuery.query);
-      setQueryName(selectedQuery.name);
-    } else {
-      setValue("");
-      setQueryName("");
+    setValue(selectedQuery?.query ?? "");
+    if (queryNameInputRef.current) {
+      queryNameInputRef.current.value = selectedQuery?.query ?? "";
     }
   }, [selectedQuery]);
 
@@ -99,11 +100,7 @@ function QueryEditor() {
         secondaryAction={{ label: "Cancel", onClick: closeModal }}
       >
         <label htmlFor="query-name">Query Name</label>
-        <StyledInput
-          id="query-name"
-          value={queryName}
-          onChange={(e) => setQueryName(e.target.value)}
-        />
+        <StyledInput id="query-name" ref={queryNameInputRef} />
       </Modal>
       <ToolbarContainer>
         <Title>Query Editor</Title>
@@ -125,13 +122,16 @@ function QueryEditor() {
           disabled={!selectedDatasource || !value}
         />
       </ToolbarContainer>
-      <Editor
+      <MemoizedEditor
         height="100%"
         defaultLanguage="sql"
         theme="vs-light"
         defaultValue={"-- Select a datasource to run queries."}
         value={value}
-        onChange={(value) => setValue(value ?? "")}
+        onChange={useCallback(
+          (value: string | undefined) => setValue(value ?? ""),
+          []
+        )}
         options={{
           minimap: { enabled: false },
           scrollBeyondLastLine: false,

@@ -1,5 +1,7 @@
 import { BiImport } from "react-icons/bi";
 
+import { useShallow } from "zustand/shallow";
+
 import { Container, GridArea } from "../ui/Container";
 import ToolbarContainer from "../ui/Toolbar";
 import { IconButton } from "../ui/Button";
@@ -11,14 +13,17 @@ import { Badge } from "../ui/Badge";
 import { exportToCSV } from "../../utils/export";
 
 function QueryResultViewer() {
-  const { loading, result, executionTime, selectedQuery } = useQueryStore();
+  const { loading, result, executionTime } = useQueryStore(
+    useShallow((state) => ({
+      loading: state.loading,
+      result: state.result,
+      executionTime: state.executionTime,
+    }))
+  );
 
   const handleExport = () => {
     if (result) {
-      const filename = selectedQuery
-        ? `${selectedQuery.name}.csv`
-        : "export.csv";
-      exportToCSV(result, filename);
+      exportToCSV(result, "export.csv");
     }
   };
 

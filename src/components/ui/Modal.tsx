@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 import { StyledButton } from "./Button";
 
-interface ModalProps {
+type ModalProps = {
   children: React.ReactNode;
   isOpen: boolean;
   onClose: () => void;
@@ -17,7 +17,7 @@ interface ModalProps {
     label: string;
     onClick: () => void;
   };
-}
+};
 
 const ModalOverlay = styled.div`
   position: fixed;

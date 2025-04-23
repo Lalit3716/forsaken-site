@@ -93,7 +93,7 @@ function QueryEditor() {
         setIsDirty(true);
       }
     },
-    [selectedQuery],
+    [selectedQuery]
   );
 
   useEffect(() => {
@@ -111,7 +111,11 @@ function QueryEditor() {
         secondaryAction={{ label: "Cancel", onClick: closeModal }}
       >
         <label htmlFor="query-name">Query Name</label>
-        <StyledInput id="query-name" ref={queryNameInputRef} />
+        <StyledInput
+          defaultValue={selectedQuery?.name}
+          id="query-name"
+          ref={queryNameInputRef}
+        />
       </Modal>
       <ToolbarContainer>
         <Title>Query Editor</Title>
@@ -147,7 +151,7 @@ function QueryEditor() {
             fontSize: 16,
             wordWrap: "on",
           }),
-          [],
+          []
         )}
       />
     </GridArea>
